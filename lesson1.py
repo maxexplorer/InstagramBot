@@ -9,7 +9,8 @@ PATH = 'C:/Users/Макс/PycharmProjects/InstagramBot/chromedriver/chromedriver
 INSTAGRAM = 'https://www.instagram.com'
 
 
-def login(username, passsword):
+def hashtag_search(username, password, hashtag):
+    hashtag_path = f'https://www.instagram.com/explore/tags/{hashtag}/'
     browser = webdriver.Chrome(PATH)
 
     try:
@@ -24,10 +25,24 @@ def login(username, passsword):
 
         password_input = browser.find_element(By.NAME, 'password')
         password_input.clear()
-        password_input.send_keys(passsword)
+        password_input.send_keys(password)
 
         password_input.send_keys(Keys.ENTER)
-        time.sleep(10)
+        time.sleep(5)
+
+        try:
+            browser.get(hashtag_path)
+            time.sleep(5)
+            hrefs = browser.find_elements(By.TAG_NAME, 'a')
+            posts_urls = []
+            for item in hrefs:
+                href = item.get_attribute('href')
+                if '/p/' in href:
+                    posts_urls.append(href)
+                    print(href)
+
+        except Exception as ex:
+            print(ex)
 
         browser.close()
         browser.quit()
