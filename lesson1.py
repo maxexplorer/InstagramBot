@@ -34,12 +34,9 @@ def hashtag_search(username, password, hashtag):
             browser.get(hashtag_path)
             time.sleep(5)
             hrefs = browser.find_elements(By.TAG_NAME, 'a')
-            posts_urls = []
-            for item in hrefs:
-                href = item.get_attribute('href')
-                if '/p/' in href:
-                    posts_urls.append(href)
-                    print(href)
+
+            posts_urls = [item.get_attribute('href') for item in hrefs if '/p/' in item.get_attribute('href')]
+            print(posts_urls)
 
         except Exception as ex:
             print(ex)
