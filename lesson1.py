@@ -35,6 +35,10 @@ def hashtag_search(username, password, hashtag):
             time.sleep(5)
             hrefs = browser.find_elements(By.TAG_NAME, 'a')
 
+            for i in range(1, 4):
+                browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+                time.sleep(random.randrange(3, 5))
+
             posts_urls = [item.get_attribute('href') for item in hrefs if '/p/' in item.get_attribute('href')]
             print(posts_urls)
 
